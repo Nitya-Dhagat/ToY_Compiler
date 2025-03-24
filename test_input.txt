@@ -7,4 +7,9 @@ fervo (num = 0; num < 5; num = num + 1) {
     chhapo("Loop Iteration!");
 }
 
+bandharan Student {
+    ank rollNo;
+    bool isPassed;
+};
+
 moklo num;

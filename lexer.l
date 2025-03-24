@@ -23,7 +23,7 @@
 "vakya"           { return STRING; }
 "bandharan"       { return STRUCT; }
 
-\"[^\"]*\"         { yylval.sval = strdup(yytext); return STRING; }  // Properly capture strings
+\"[^\"]*\"         { yylval.sval = strdup(yytext); return STRING; }  
 [0-9]+             { yylval.ival = atoi(yytext); return NUMBER; }
 [a-zA-Z_][a-zA-Z0-9_]* { yylval.sval = strdup(yytext); return IDENTIFIER; }
 

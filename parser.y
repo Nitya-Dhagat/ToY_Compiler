@@ -18,7 +18,7 @@ int yyparse();
 %token INT BOOL TRUE FALSE VOID PRINTF OR IF AND THEN ELSE FOR RETURN MOD STRUCT
 %token ASSIGN PLUS MINUS MUL DIV SEMICOLON LPAREN RPAREN LBRACE RBRACE LESS GREATER
 
-%type <sval> assignment for_loop
+%type <sval> assignment for_loop struct_declaration
 %type <ival> expression
 
 %%
@@ -36,6 +36,7 @@ statement:
     }
     | assignment SEMICOLON { printf("Assignment: %s\n", $1); }
     | for_loop { }
+    | struct_declaration { }
     | RETURN expression SEMICOLON { printf("Return statement: %d\n", $2); }
     ;
 
@@ -60,6 +61,19 @@ for_loop:
     FOR LPAREN assignment SEMICOLON expression SEMICOLON assignment RPAREN LBRACE statement_list RBRACE {
         printf("For loop: Initialization [%s], Condition [%d], Increment [%s]\n", $3, $5, $7);
     }
+    ;
+
+struct_declaration:
+    STRUCT IDENTIFIER LBRACE struct_body RBRACE SEMICOLON {
+        printf("Defined struct: %s\n", $2);
+    }
+    ;
+
+struct_body:
+    INT IDENTIFIER SEMICOLON { printf("Struct member (int): %s\n", $2); }
+    | BOOL IDENTIFIER SEMICOLON { printf("Struct member (bool): %s\n", $2); }
+    | struct_body INT IDENTIFIER SEMICOLON { printf("Struct member (int): %s\n", $3); }
+    | struct_body BOOL IDENTIFIER SEMICOLON { printf("Struct member (bool): %s\n", $3); }
     ;
 
 statement_list:
